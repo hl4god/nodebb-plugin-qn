@@ -1,7 +1,7 @@
 {
-    "id": "nodebb-plugin-qn",
+    "id": "nodebb-plugin-qn-imagemin",
     "name": "Qiniu Upload Plugin",
-    "description": "A Plugin that uploads images to qiniu",
+    "description": "A Plugin that uploads minified images to qiniu",
     "url": "https://github.com/Samurais/nodebb-plugin-qn",
     "library": "./index.js",
     "staticDirs": {

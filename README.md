@@ -4,7 +4,7 @@ A plugin that uploads images to Qiniu.
 
 ## Installation
 
-    npm install nodebb-plugin-qiniu
+    npm install nodebb-plugin-qn-imagemin
 
 
 ## Setup
