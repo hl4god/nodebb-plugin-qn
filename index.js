@@ -104,7 +104,7 @@ var imageminPngquant = require('imagemin-pngquant');
 		if (type === 'file') {
 			//此处处理图片 压缩后再上传
 					console.log("压缩前大小:％d 字节", image.size); //字节
-					imagemin([image.path], 'build/images', {
+					imagemin([image.path], '/tmp/images', {
 						use: [
 							imageminMozjpeg(),
 							imageminPngquant({
