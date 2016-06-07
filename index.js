@@ -139,7 +139,7 @@ var qnLib = require('qn');
 				} else {
 					return callback(null, {
 						name: image.name,
-						url: "//" + result.url+"?imageMogr2/quality/40"
+						url: "http://" + result.url+"?imageMogr2/quality/40"
 					});
 				}
 			});

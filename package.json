@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-qn-imagemin",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A Plugin that uploads minified images to qiniu",
   "main": "index.js",
   "repository": {
