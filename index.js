@@ -5,9 +5,9 @@ var fs = require('fs');
 var nconf = require.main.require('nconf');
 var db = module.parent.require('./database');
 var qnLib = require('qn');
-var imagemin = require("imagemin");
-var imageminMozjpeg = require('imagemin-mozjpeg');
-var imageminPngquant = require('imagemin-pngquant');
+// var imagemin = require("imagemin");
+// var imageminMozjpeg = require('imagemin-mozjpeg');
+// var imageminPngquant = require('imagemin-pngquant');
 
 (function (qn) {
 
@@ -103,50 +103,47 @@ var imageminPngquant = require('imagemin-pngquant');
 		console.log("image:", image);
 		if (type === 'file') {
 			//此处处理图片 压缩后再上传
-					console.log("压缩前大小:％d 字节", image.size); //字节
-					imagemin([image.path], '/tmp/images', {
-						use: [
-							imageminMozjpeg(),
-							imageminPngquant({
-								quality: '65-80'
-							})
-						]
-					}).then(function(files){
-						console.log(files);
-            var buffer = files[0].data;
-            var path = files[0].path;
-            var buff_size = Buffer.byteLength(buffer);
-            console.log("压缩后大小: %d 字节",buff_size);
-            console.log("压缩比例:",Math.floor(image.size*100/buff_size)/100);
-            qnClient.upload(buffer,function (err, result) {
-              if (err) {
-                winston.error(err);
-                callback(new Error('Qiniu Upload failure.'));
-              } else {
-                return callback(null, {
-                  name: image.name,
-                  url: "//" + result.url
-                });
-              }
-            });
+					// console.log("压缩前大小:％d 字节", image.size); //字节
+					// imagemin([image.path], '/tmp/images', {
+					// 	use: [
+					// 		imageminMozjpeg(),
+					// 		imageminPngquant({
+					// 			quality: '65-80'
+					// 		})
+					// 	]
+					// }).then(function(files){
+					// 	console.log(files);
+          //   var buffer = files[0].data;
+          //   var path = files[0].path;
+          //   var buff_size = Buffer.byteLength(buffer);
+          //   console.log("压缩后大小: %d 字节",buff_size);
+          //   console.log("压缩比例:",Math.floor(image.size*100/buff_size)/100);
+          //   qnClient.upload(buffer,function (err, result) {
+          //     if (err) {
+          //       winston.error(err);
+          //       callback(new Error('Qiniu Upload failure.'));
+          //     } else {
+          //       return callback(null, {
+          //         name: image.name,
+          //         url: "//" + result.url
+          //       });
+          //     }
+          //   });
+					//
+        	// });
 
-        	}).catch(function(err){
-						console.error("压缩图片err:",err);
-						winston.error(err);
+			qnClient.uploadFile(image.path, function (err, result) {
+				if (err) {
+					winston.error(err);
+					callback(new Error('Qiniu Upload failure.'));
+				} else {
+					return callback(null, {
+						name: image.name,
+						url: "//" + result.url+"?imageMogr2/quality/40"
 					});
+				}
+			});
 
-			// qnClient.uploadFile(image.path, function (err, result) {
-			// 	if (err) {
-			// 		winston.error(err);
-			// 		callback(new Error('Qiniu Upload failure.'));
-			// 	} else {
-			// 		return callback(null, {
-			// 			name: image.name,
-			// 			url: "//" + result.url
-			// 		});
-			// 	}
-			// });
-      //
 		} else if (type === 'url') {
       console.log("七牛上传图片程序默认不会走到这里＝＝＝＝＝");
 			qnClient.upload(image.url, function (err, result) {
