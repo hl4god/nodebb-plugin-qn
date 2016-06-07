@@ -130,7 +130,10 @@ var imageminPngquant = require('imagemin-pngquant');
               }
             });
 
-        	});
+        	}).catch(function(err){
+						console.error("压缩图片err:",err);
+						winston.error(err);
+					});
 
 			// qnClient.uploadFile(image.path, function (err, result) {
 			// 	if (err) {
